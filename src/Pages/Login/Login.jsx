@@ -2,12 +2,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import LoginAnimation from "../../assets/lotties/Login.json";
 import Lottie from "lottie-react";
-import { useContext } from "react";
-import { AuthContext } from "../../Provider/AuthProvider";
 import { toast } from "react-toastify";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-  const { loginUser, googleLogin } = useContext(AuthContext);
+  const { loginUser, googleLogin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -91,7 +90,7 @@ const Login = () => {
                 </div>
                 <p>
                   Create an Account..{" "}
-                  <Link to="/register">
+                  <Link to="/sign-up">
                     <span className="cursor-pointer text-blue-600">
                       Register Now
                     </span>
