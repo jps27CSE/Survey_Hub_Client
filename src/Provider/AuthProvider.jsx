@@ -1,78 +1,69 @@
-/* eslint-disable react/prop-types */
-import { createContext, useEffect, useState } from "react";
 import {
-  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signInWithPopup,
   signOut,
-  updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
+import PropTypes from "prop-types";
+import { createContext, useEffect, useState } from "react";
 import auth from "../Firebase/FirebaseConfig";
-// import { clearCookie } from "../api/auth";
 
 export const AuthContext = createContext(null);
-const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const GoogleProvider = new GoogleAuthProvider();
 
-  const createUser = (email, password) => {
+  const registerUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const signIn = (email, password) => {
+  const loginUser = (email, password) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const signInWithGoogle = () => {
+  const googleLogin = () => {
     setLoading(true);
-    return signInWithPopup(auth, googleProvider);
+    return signInWithPopup(auth, GoogleProvider);
   };
 
-  const logOut = async () => {
+  const logOut = () => {
     setLoading(true);
-    // await clearCookie();
     return signOut(auth);
   };
 
-  const updateUserProfile = (name, photo) => {
-    return updateProfile(auth.currentUser, {
-      displayName: name,
-      photoURL: photo,
-    });
-  };
-
-  // onAuthStateChange
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log("CurrentUser-->", currentUser);
       setLoading(false);
     });
+
     return () => {
-      return unsubscribe();
+      unsubscribe();
     };
   }, []);
 
-  const authInfo = {
+  const authValue = {
+    registerUser,
     user,
-    loading,
-    setLoading,
-    createUser,
-    signIn,
-    signInWithGoogle,
+    loginUser,
     logOut,
-    updateUserProfile,
+    loading,
+    googleLogin,
   };
 
   return (
-    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
   );
 };
 
 export default AuthProvider;
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
