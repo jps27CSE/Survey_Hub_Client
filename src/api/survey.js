@@ -14,3 +14,66 @@ export const getSurvey = async (id) => {
   );
   return data;
 };
+
+// Submit a vote for a survey
+export const submitVote = async (postData) => {
+  try {
+    const response = await axiosSecure.post(
+      `${import.meta.env.VITE_API_URL}/submit-vote`,
+      postData
+    );
+    console.log("Vote submitted successfully:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error submitting vote:", error.message);
+    throw error;
+  }
+};
+
+// increate vote for a survey
+
+export const incrementVote = async (id) => {
+  try {
+    const response = await axiosSecure.post(
+      `${import.meta.env.VITE_API_URL}/increment-vote/${id}`
+    );
+  } catch (error) {
+    console.error("Error submitting vote:", error.message);
+  }
+};
+
+// vote check
+export const hasUserVoted = async (userEmail, surveyId) => {
+  try {
+    const response = await axiosSecure.get(
+      `${import.meta.env.VITE_API_URL}/has-user-voted/${userEmail}/${surveyId}`
+    );
+
+    return response.data.hasVoted;
+  } catch (error) {
+    console.error("Error checking if user has voted:", error.message);
+    return false; // Assume the user has not voted in case of an error
+  }
+};
+
+// Add a comment to a survey
+export const addComment = async (surveyId, userEmail, commentContent) => {
+  try {
+    const postData = {
+      surveyId: surveyId,
+      userEmail: userEmail,
+      commentContent: commentContent,
+    };
+
+    const response = await axiosSecure.post(
+      `${import.meta.env.VITE_API_URL}/add-comment`,
+      postData
+    );
+
+    console.log("Comment added successfully:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error adding comment:", error.message);
+    throw error;
+  }
+};

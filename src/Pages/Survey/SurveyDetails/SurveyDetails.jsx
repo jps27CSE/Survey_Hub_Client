@@ -1,14 +1,22 @@
 import { useEffect, useState } from "react";
-import { getSurvey } from "../../../api/survey";
+import {
+  addComment,
+  getSurvey,
+  hasUserVoted,
+  incrementVote,
+  submitVote,
+} from "../../../api/survey";
 import { useParams } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useRole from "../../../hooks/useRole";
+import { toast } from "react-toastify";
 
 const SurveyDetails = () => {
   const params = useParams();
   const [survey, setSurvey] = useState(null);
   const { user } = useAuth();
   const [selectedOption, setSelectedOption] = useState(null);
+  const [commentContent, setCommentContent] = useState("");
   console.log(selectedOption);
   const [role] = useRole();
 
@@ -30,20 +38,57 @@ const SurveyDetails = () => {
   }
 
   const handleVote = (option) => {
-    // Find the selected option by its id and set its text in the state
     setSelectedOption(option);
   };
 
-  const handleSubmitVote = () => {
-    // Implement the logic to submit the vote to the backend
+  const handleSubmitVote = async () => {
     if (selectedOption) {
-      console.log(`Submitting vote for option: ${selectedOption}`);
-      // Add your API call to submit the vote here
+      try {
+        const userEmail = user?.email;
+        const postData = {
+          userEmail: userEmail,
+          surveyId: survey._id,
+          selectedOption: selectedOption,
+        };
+
+        // Check if the user has already voted for this survey
+        const existingVote = await hasUserVoted(userEmail, survey._id);
+
+        if (existingVote) {
+          toast.error("You have already voted for this survey");
+        } else {
+          // If the user has not voted, submit the vote
+          const data = await submitVote(postData);
+          const updateInc = await incrementVote(survey._id);
+          toast.success("Vote submitted successfully");
+          console.log("Vote submitted successfully:", data.data);
+        }
+      } catch (error) {
+        console.error("Error submitting vote:", error.message);
+        toast.error("Failed to submit vote");
+      }
     }
   };
+  const handleCommentChange = (event) => {
+    setCommentContent(event.target.value);
+  };
 
-  const handleComment = (comment) => {
-    // Implement the logic to handle user commenting
+  const handleComment = async () => {
+    try {
+      const userEmail = user?.email;
+
+      await addComment(survey._id, userEmail, commentContent);
+
+      // Fetch the updated survey data to display the new comments
+      const updatedSurvey = await getSurvey(survey._id);
+      setSurvey(updatedSurvey);
+
+      toast.success("Comment added successfully");
+      setCommentContent(""); // Clear the comment content after submission
+    } catch (error) {
+      console.error("Error adding comment:", error.message);
+      toast.error("Failed to add comment");
+    }
   };
 
   const handleLikeDislike = (isLike) => {
@@ -98,11 +143,13 @@ const SurveyDetails = () => {
           <div className="mb-4">
             <h3 className="text-lg font-semibold mb-2">Add Comment</h3>
             <textarea
+              value={commentContent}
+              onChange={handleCommentChange}
               placeholder="Add your comment..."
               className="w-full p-2 border border-gray-300 rounded"
             />
             <button
-              onClick={() => handleComment("comment content")}
+              onClick={handleComment}
               className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
             >
               Add Comment
