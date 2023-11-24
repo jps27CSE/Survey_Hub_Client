@@ -4,46 +4,47 @@ import LoginAnimation from "../../assets/lotties/Login.json";
 import Lottie from "lottie-react";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
+import { getToken, saveUser } from "../../api/auth";
 
 const Login = () => {
   const { loginUser, googleLogin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleGoogleLogin = () => {
-    googleLogin()
-      .then((result) => {
-        toast.success(`Google Logging Successfully..
-       Email: ${result.user.email}
-      `);
-        if (location.state === null) {
-          navigate("/");
-        } else {
-          navigate(`${location.state}`);
-        }
-      })
-      .catch((error) => toast.error(error.message));
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await googleLogin();
+
+      const dbResponse = await saveUser(result?.user);
+
+      await getToken(result?.user?.email);
+      navigate("/");
+      toast.success("Login Successful");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message);
+    }
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    loginUser(email, password)
-      .then((result) => {
-        toast.success(`
-        Login Successfully!...................
+    try {
+      const result = await loginUser(email, password);
 
-        Email : ${result.user.email} 
-        `);
-        if (location.state === null) {
-          navigate("/");
-        } else {
-          navigate(`${location.state}`);
-        }
-      })
-      .catch((error) => toast.error(error.message));
+      await getToken(result?.user?.email);
+      if (location.state === null) {
+        navigate("/");
+      } else {
+        navigate(`${location.state}`);
+      }
+      toast.success("Login Successful");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message);
+    }
   };
 
   return (

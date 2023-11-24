@@ -6,6 +6,7 @@ import LoginAnimation from "../../assets/lotties/Login.json";
 import Lottie from "lottie-react";
 import useAuth from "../../hooks/useAuth";
 import { imageUpload } from "../../api/utils";
+import { getToken, saveUser } from "../../api/auth";
 
 const SignUp = () => {
   const { registerUser, googleLogin, updateUserProfile } = useAuth();
@@ -13,19 +14,19 @@ const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleGoogleLogin = () => {
-    googleLogin()
-      .then((result) => {
-        toast.success(`Google Register Successfully..
-      Email: ${result.user.email}
-     `);
-        if (location.state === null) {
-          navigate("/");
-        } else {
-          navigate(`${location.state}`);
-        }
-      })
-      .catch((error) => toast.error(error.message));
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await googleLogin();
+
+      const dbResponse = await saveUser(result?.user);
+
+      await getToken(result?.user?.email);
+      navigate("/");
+      toast.success("Sign Up Successful");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -55,6 +56,10 @@ const SignUp = () => {
 
       await updateUserProfile(name, imageData?.data?.display_url);
 
+      const dbResponse = await saveUser(result?.user);
+
+      await getToken(result?.user?.email);
+
       if (location.state === null) {
         navigate("/");
       } else {
@@ -80,7 +85,7 @@ const SignUp = () => {
               />
               <h1 className="text-5xl font-bold ">Register now!</h1>
             </div>
-            <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <div className="bg-blue-300 card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
               <form className="card-body" onSubmit={handleSubmit}>
                 <div className="form-control">
                   <label className="label">
@@ -141,7 +146,7 @@ const SignUp = () => {
                 <p>
                   Already have an Account?..{" "}
                   <Link to="/login">
-                    <span className="cursor-pointer text-blue-400">
+                    <span className="cursor-pointer text-blue-600">
                       Login Now
                     </span>
                   </Link>
