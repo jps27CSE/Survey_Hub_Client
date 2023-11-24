@@ -10,6 +10,7 @@ import {
 import PropTypes from "prop-types";
 import { createContext, useEffect, useState } from "react";
 import auth from "../Firebase/FirebaseConfig";
+import { clearCookie } from "../api/auth";
 
 export const AuthContext = createContext(null);
 
@@ -33,8 +34,9 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, GoogleProvider);
   };
 
-  const logOut = () => {
+  const logOut = async () => {
     setLoading(true);
+    await clearCookie();
     return signOut(auth);
   };
 
