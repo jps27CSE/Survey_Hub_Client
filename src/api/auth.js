@@ -1,3 +1,4 @@
+import axios from "axios";
 import axiosSecure from ".";
 
 export const saveUser = async (user) => {
@@ -22,4 +23,12 @@ export const clearCookie = async () => {
   console.log("hello");
   const { data } = await axiosSecure.get(`/logout`);
   return data;
+};
+
+// Get user role
+export const getRole = async (email) => {
+  const { data } = await axios.get(
+    `${import.meta.env.VITE_API_URL}/user/${email}`
+  );
+  return data.role;
 };
