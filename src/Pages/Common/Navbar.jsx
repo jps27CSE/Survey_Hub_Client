@@ -10,7 +10,7 @@ const Navbar = () => {
         <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to="/survery">Survey</NavLink>
+        <NavLink to="/survey">Survey</NavLink>
       </li>
     </>
   );
@@ -50,20 +50,6 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-          <>
-            <label
-              tabIndex={0}
-              className="btn btn-ghost btn-circle avatar mr-2"
-            >
-              <div className="w-8  lg:w-10 rounded-full">
-                <img />
-              </div>
-            </label>
-            <div>
-              <h1 className="text-sm md:text-xl lg:text-xl mr-2 "></h1>
-            </div>
-          </>
-
           {user && (
             <>
               <label
