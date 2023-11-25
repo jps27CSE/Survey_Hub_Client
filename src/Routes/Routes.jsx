@@ -7,6 +7,9 @@ import Survey from "../Pages/Survey/Survey";
 import SurveyDetails from "../Pages/Survey/SurveyDetails/SurveyDetails";
 import ProPage from "../Pages/ProPage/ProPage";
 import PrivateRoute from "./PrivateRoute";
+import Sidebar from "../Pages/Dashboard/Sidebar/Sidebar";
+import ManageUsers from "../Pages/Dashboard/ManageUsers/ManageUsers";
+import AdminRoute from "./AdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +42,24 @@ const router = createBrowserRouter([
           <PrivateRoute>
             <ProPage />
           </PrivateRoute>
+        ),
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <Sidebar />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "manage-users",
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
         ),
       },
     ],
