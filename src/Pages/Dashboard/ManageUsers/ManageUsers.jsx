@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllUsers } from "../../../api/auth";
 import UserDataRow from "./UserDataRow";
+import { useState } from "react";
 
 const ManageUsers = () => {
   const { data: users = [], refetch } = useQuery({
@@ -8,8 +9,15 @@ const ManageUsers = () => {
     queryFn: async () => await getAllUsers(),
   });
 
-  console.log(users);
+  const [filter, setFilter] = useState("all");
 
+  const filteredUsers = users.filter((user) => {
+    if (filter === "all") return true;
+    if (filter === "pro") return user?.pro_user === "true";
+    if (filter === "user") return user?.role === "user";
+    if (filter === "surveyor") return user?.role === "surveyor";
+    return true;
+  });
   return (
     <div>
       {" "}
@@ -17,6 +25,20 @@ const ManageUsers = () => {
         <div className="py-8">
           <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
             <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+              <div className="mb-4">
+                <label className="text-sm font-semibold">Filter:</label>
+                <select
+                  value={filter}
+                  onChange={(e) => setFilter(e.target.value)}
+                  className="px-3 py-1 border rounded-md ml-2"
+                >
+                  <option value="all">All</option>
+                  <option value="pro">Pro Users</option>
+                  <option value="normal">Users</option>
+                  <option value="surveyor">Surveyors</option>
+                </select>
+              </div>
+
               <table className="min-w-full leading-normal">
                 <thead>
                   <tr>
@@ -55,7 +77,7 @@ const ManageUsers = () => {
                 </thead>
                 <tbody>
                   {/* User data table row */}
-                  {users.map((user) => (
+                  {filteredUsers.map((user) => (
                     <UserDataRow key={user._id} user={user} refetch={refetch} />
                   ))}
                 </tbody>
