@@ -3,6 +3,8 @@ import {
   addComment,
   getSurvey,
   hasUserVoted,
+  incrementDislike,
+  incrementLike,
   incrementVote,
   submitVote,
 } from "../../../api/survey";
@@ -59,7 +61,10 @@ const SurveyDetails = () => {
         } else {
           // If the user has not voted, submit the vote
           const data = await submitVote(postData);
-          const updateInc = await incrementVote(survey._id);
+
+          // Increment the vote count for the selected option
+          await incrementVote(survey._id, selectedOption);
+
           toast.success("Vote submitted successfully");
           console.log("Vote submitted successfully:", data.data);
         }
@@ -91,8 +96,35 @@ const SurveyDetails = () => {
     }
   };
 
-  const handleLikeDislike = (isLike) => {
-    // Implement the logic to handle user liking or disliking the survey
+  const handleLikeDislike = async (isLike) => {
+    try {
+      if (!user || !user.email) {
+        toast.error("You need to be logged in to like or dislike the survey");
+        return;
+      }
+
+      const userLiked = survey.likedBy?.includes(user.email);
+      const userDisliked = survey.dislikedBy?.includes(user.email);
+
+      if (isLike && !userLiked) {
+        await incrementLike(survey._id);
+        setSurvey((prevSurvey) => ({
+          ...prevSurvey,
+          likedBy: [...(prevSurvey.likedBy || []), user.email],
+        }));
+      } else if (!isLike && !userDisliked) {
+        await incrementDislike(survey._id);
+        setSurvey((prevSurvey) => ({
+          ...prevSurvey,
+          dislikedBy: [...(prevSurvey.dislikedBy || []), user.email],
+        }));
+      } else {
+        toast.error("You have already liked or disliked this survey");
+      }
+    } catch (error) {
+      console.error("Error liking or disliking survey:", error.message);
+      toast.error("Failed to like or dislike survey");
+    }
   };
 
   const handleReport = () => {

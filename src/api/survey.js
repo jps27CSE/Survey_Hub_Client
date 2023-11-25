@@ -32,13 +32,16 @@ export const submitVote = async (postData) => {
 
 // increate vote for a survey
 
-export const incrementVote = async (id) => {
+// Increment vote for a survey
+export const incrementVote = async (id, option) => {
   try {
     const response = await axiosSecure.post(
-      `${import.meta.env.VITE_API_URL}/increment-vote/${id}`
+      `${import.meta.env.VITE_API_URL}/increment-vote/${id}/${option}`
     );
+    console.log("Vote incremented successfully:", response.data);
   } catch (error) {
-    console.error("Error submitting vote:", error.message);
+    console.error("Error incrementing vote:", error.message);
+    throw error;
   }
 };
 
@@ -91,6 +94,31 @@ export const createSurvey = async (surveyData) => {
     return response.data;
   } catch (error) {
     console.error("Error creating survey:", error.message);
+    throw error;
+  }
+};
+// Increment like
+export const incrementLike = async (id) => {
+  try {
+    const response = await axiosSecure.post(
+      `${import.meta.env.VITE_API_URL}/increment-like/${id}`
+    );
+    console.log("Like incremented successfully:", response.data);
+  } catch (error) {
+    console.error("Error incrementing like:", error.message);
+    throw error;
+  }
+};
+
+// Increment dislike
+export const incrementDislike = async (id) => {
+  try {
+    const response = await axiosSecure.post(
+      `${import.meta.env.VITE_API_URL}/increment-dislike/${id}`
+    );
+    console.log("Dislike incremented successfully:", response.data);
+  } catch (error) {
+    console.error("Error incrementing dislike:", error.message);
     throw error;
   }
 };

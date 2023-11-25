@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { createSurvey } from "../../../api/survey";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const CreateSurvey = () => {
+  let navigate = useNavigate();
   const [surveyData, setSurveyData] = useState({
     title: "",
     description: "",
@@ -24,7 +26,7 @@ const CreateSurvey = () => {
         options: ["Yes", "No"],
         category: "",
       });
-
+      navigate("/survey");
       toast.success("Survey created successfully");
     } catch (error) {
       console.error("Error creating survey:", error.message);
@@ -50,6 +52,7 @@ const CreateSurvey = () => {
             value={surveyData.title}
             onChange={handleInputChange}
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+            required
           />
         </div>
         <div className="mb-4">
@@ -61,6 +64,7 @@ const CreateSurvey = () => {
             value={surveyData.description}
             onChange={handleInputChange}
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+            required
           />
         </div>
         <div className="mb-4">
@@ -87,6 +91,7 @@ const CreateSurvey = () => {
             name="category"
             value={surveyData.category}
             onChange={handleInputChange}
+            required
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
