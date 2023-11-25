@@ -1,8 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import useRole from "../../hooks/useRole";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
+  const [role] = useRole();
+  console.log(role);
 
   const navLinks = (
     <>
@@ -12,6 +15,11 @@ const Navbar = () => {
       <li>
         <NavLink to="/survey">Survey</NavLink>
       </li>
+      {user && role && role.toLowerCase() === "user" && (
+        <li>
+          <NavLink to="/pro_page">Become a Pro</NavLink>
+        </li>
+      )}
     </>
   );
 

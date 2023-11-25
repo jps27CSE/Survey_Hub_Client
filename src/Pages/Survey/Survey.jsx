@@ -19,7 +19,7 @@ const Survey = () => {
   console.log(surveys);
 
   return (
-    <div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {surveys?.map((survey) => (
         <SurveyCard key={survey._id} survey={survey} />
       ))}
