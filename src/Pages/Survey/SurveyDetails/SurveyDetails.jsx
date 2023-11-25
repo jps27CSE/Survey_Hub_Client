@@ -139,7 +139,7 @@ const SurveyDetails = () => {
         </div>
 
         {/* Allow Pro-Users to Add Comments */}
-        {role === "pro-user" && (
+        {role?.pro_user === "true" && (
           <div className="mb-4">
             <h3 className="text-lg font-semibold mb-2">Add Comment</h3>
             <textarea

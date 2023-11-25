@@ -31,7 +31,7 @@ export const getRole = async (email) => {
   const { data } = await axios.get(
     `${import.meta.env.VITE_API_URL}/user/${email}`
   );
-  return data.role;
+  return data;
 };
 
 // Get All Users

@@ -11,7 +11,7 @@ const AdminRoute = ({ children }) => {
     return (
       <Lottie className="mx-auto w-80" animationData={Loading} loop={true} />
     );
-  if (role === "admin") return children;
+  if (role?.role === "admin") return children;
   return <Navigate to="/dashboard" />;
 };
 

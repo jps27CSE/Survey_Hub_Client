@@ -11,32 +11,50 @@ const Sidebar = () => {
         <div className="text-2xl font-bold mb-4">Dashboard</div>
 
         <ul className="space-y-2">
-          {role && role.toLowerCase() === "admin" && (
+          {role?.role && role?.role.toLowerCase() === "admin" && (
+            <>
+              <li>
+                <Link
+                  to="manage-users"
+                  className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700"
+                >
+                  Manage Users
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="survey-status"
+                  className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700"
+                >
+                  Survey Status
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="all-payments"
+                  className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700"
+                >
+                  All Payments
+                </Link>
+              </li>
+            </>
+          )}
+          {role?.role && role?.role.toLowerCase() === "surveyor" && (
             <li>
               <Link
-                to="manage-users"
+                to="create-survey"
                 className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700"
               >
-                Manage Users
+                Create Survey
               </Link>
             </li>
           )}
           <li>
             <Link
-              to="/reports"
+              to="/"
               className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700"
             >
-              <span className="material-icons">analytics</span>
-              Reports
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/settings"
-              className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700"
-            >
-              <span className="material-icons">settings</span>
-              Settings
+              Home
             </Link>
           </li>
         </ul>

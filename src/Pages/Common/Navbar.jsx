@@ -15,7 +15,7 @@ const Navbar = () => {
       <li>
         <NavLink to="/survey">Survey</NavLink>
       </li>
-      {user && role && role.toLowerCase() === "user" && (
+      {user && role?.role && role?.role.toLowerCase() === "user" && (
         <li>
           <NavLink to="/pro_page">Become a Pro</NavLink>
         </li>

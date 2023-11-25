@@ -1,0 +1,92 @@
+import { useState } from "react";
+
+const CreateSurvey = () => {
+  const [surveyData, setSurveyData] = useState({
+    title: "",
+    description: "",
+    options: ["Yes", "No"],
+    category: "",
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Survey Data:", surveyData);
+    setSurveyData({
+      title: "",
+      description: "",
+      options: ["Yes", "No"],
+      category: "",
+    });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSurveyData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto mt-8 p-6 bg-white rounded-md shadow-md">
+      <h2 className="text-2xl font-semibold mb-4">Create a New Survey</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Title:
+          </label>
+          <input
+            type="text"
+            name="title"
+            value={surveyData.title}
+            onChange={handleInputChange}
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Description:
+          </label>
+          <textarea
+            name="description"
+            value={surveyData.description}
+            onChange={handleInputChange}
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Options:
+          </label>
+          <select
+            name="options"
+            value={surveyData.options}
+            onChange={handleInputChange}
+            multiple
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+          >
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Category:
+          </label>
+          <input
+            type="text"
+            name="category"
+            value={surveyData.category}
+            onChange={handleInputChange}
+            className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Create Survey
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default CreateSurvey;

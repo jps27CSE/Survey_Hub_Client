@@ -10,6 +10,9 @@ import PrivateRoute from "./PrivateRoute";
 import Sidebar from "../Pages/Dashboard/Sidebar/Sidebar";
 import ManageUsers from "../Pages/Dashboard/ManageUsers/ManageUsers";
 import AdminRoute from "./AdminRoute";
+import SurveyStatus from "../Pages/Dashboard/SurveyStatus/SurveyStatus";
+import AllPayments from "../Pages/Dashboard/AllPayments/AllPayments";
+import CreateSurvey from "../Pages/Dashboard/CreateSurvey/CreateSurvey";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +63,30 @@ const router = createBrowserRouter([
           <AdminRoute>
             <ManageUsers />
           </AdminRoute>
+        ),
+      },
+      {
+        path: "survey-status",
+        element: (
+          <AdminRoute>
+            <SurveyStatus />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "all-payments",
+        element: (
+          <AdminRoute>
+            <AllPayments />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "create-survey",
+        element: (
+          <PrivateRoute>
+            <CreateSurvey />
+          </PrivateRoute>
         ),
       },
     ],
