@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { createSurvey } from "../../../api/survey";
+import { toast } from "react-toastify";
 
 const CreateSurvey = () => {
   const [surveyData, setSurveyData] = useState({
@@ -8,15 +10,25 @@ const CreateSurvey = () => {
     category: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Survey Data:", surveyData);
-    setSurveyData({
-      title: "",
-      description: "",
-      options: ["Yes", "No"],
-      category: "",
-    });
+
+    try {
+      const createdSurvey = await createSurvey(surveyData);
+      console.log("Created Survey:", createdSurvey);
+
+      // Reset the form
+      setSurveyData({
+        title: "",
+        description: "",
+        options: ["Yes", "No"],
+        category: "",
+      });
+
+      toast.success("Survey created successfully");
+    } catch (error) {
+      console.error("Error creating survey:", error.message);
+    }
   };
 
   const handleInputChange = (e) => {

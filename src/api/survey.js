@@ -77,3 +77,20 @@ export const addComment = async (surveyId, userEmail, commentContent) => {
     throw error;
   }
 };
+
+// Create a new survey
+export const createSurvey = async (surveyData) => {
+  console.log("hit");
+  try {
+    const response = await axiosSecure.post(
+      `${import.meta.env.VITE_API_URL}/create-survey`,
+      surveyData
+    );
+
+    console.log("Survey created successfully:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error creating survey:", error.message);
+    throw error;
+  }
+};
