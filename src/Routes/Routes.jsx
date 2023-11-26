@@ -14,6 +14,7 @@ import SurveyStatus from "../Pages/Dashboard/SurveyStatus/SurveyStatus";
 import AllPayments from "../Pages/Dashboard/AllPayments/AllPayments";
 import CreateSurvey from "../Pages/Dashboard/CreateSurvey/CreateSurvey";
 import RequestSurveyor from "../Pages/RequestForSurveyor/RequestSurveyor";
+import SurveyResponse from "../Pages/SurveyResponse/SurveyResponse";
 
 const router = createBrowserRouter([
   {
@@ -95,6 +96,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <RequestSurveyor />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "respone-survey",
+        element: (
+          <PrivateRoute>
+            <SurveyResponse />
           </PrivateRoute>
         ),
       },

@@ -59,6 +59,18 @@ const Sidebar = () => {
               </Link>
             </li>
           )}
+          {role?.role &&
+            (role?.role.toLowerCase() === "admin" ||
+              role?.role.toLowerCase() === "surveyor") && (
+              <li>
+                <Link
+                  to="respone-survey"
+                  className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700"
+                >
+                  Survey Response
+                </Link>
+              </li>
+            )}
           <li>
             <Link
               to="/"

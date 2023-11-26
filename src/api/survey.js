@@ -142,3 +142,17 @@ export const postSurveyReport = async (surveyId, userEmail, reportContent) => {
     throw error;
   }
 };
+
+// get  survey votes
+export const getSurveyVotes = async () => {
+  try {
+    const response = await axiosSecure.get(
+      `${import.meta.env.VITE_API_URL}/survey-votes`
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching survey votes:", error.message);
+    throw error;
+  }
+};

@@ -50,7 +50,8 @@ const SurveyDetails = () => {
       try {
         const userEmail = user?.email;
         const postData = {
-          userEmail: userEmail,
+          userName: user?.displayName,
+          userEmail: user?.email,
           surveyId: survey._id,
           selectedOption: selectedOption,
         };
