@@ -128,14 +128,17 @@ const SurveyDetails = () => {
 
   const handleReportSubmit = async () => {
     try {
-      // Validate report content if needed
       if (!reportContent.trim()) {
         setReportError("Report content cannot be empty");
         return;
       }
 
-      // Call the API function to submit the report
-      await postSurveyReport(survey._id, user?.email, reportContent);
+      await postSurveyReport(
+        survey.title,
+        survey._id,
+        user?.email,
+        reportContent
+      );
 
       // Reset state
       setReportContent("");

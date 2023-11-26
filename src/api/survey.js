@@ -123,9 +123,15 @@ export const incrementDislike = async (id) => {
   }
 };
 // Post survey report
-export const postSurveyReport = async (surveyId, userEmail, reportContent) => {
+export const postSurveyReport = async (
+  surveyTitle,
+  surveyId,
+  userEmail,
+  reportContent
+) => {
   try {
     const postData = {
+      surveyTitle: surveyTitle,
       userEmail: userEmail,
       reportContent: reportContent,
     };
@@ -153,6 +159,20 @@ export const getSurveyVotes = async () => {
     return response.data;
   } catch (error) {
     console.error("Error fetching survey votes:", error.message);
+    throw error;
+  }
+};
+
+// Fetch all survey reports
+export const getAllSurveyReports = async () => {
+  try {
+    const response = await axiosSecure.get(
+      `${import.meta.env.VITE_API_URL}/survey-reports`
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching survey reports:", error.message);
     throw error;
   }
 };

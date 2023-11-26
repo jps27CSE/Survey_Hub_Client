@@ -40,14 +40,32 @@ const Sidebar = () => {
             </>
           )}
           {role?.role && role?.role.toLowerCase() === "surveyor" && (
-            <li>
-              <Link
-                to="create-survey"
-                className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700"
-              >
-                Create Survey
-              </Link>
-            </li>
+            <>
+              <li>
+                <Link
+                  to="create-survey"
+                  className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700"
+                >
+                  Create Survey
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="user-feedback"
+                  className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700"
+                >
+                  User Feedback
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="admin-feedback"
+                  className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700"
+                >
+                  Admin Feedback
+                </Link>
+              </li>
+            </>
           )}
           {role?.role && role?.role.toLowerCase() === "user" && (
             <li>

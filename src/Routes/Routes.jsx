@@ -15,6 +15,8 @@ import AllPayments from "../Pages/Dashboard/AllPayments/AllPayments";
 import CreateSurvey from "../Pages/Dashboard/CreateSurvey/CreateSurvey";
 import RequestSurveyor from "../Pages/RequestForSurveyor/RequestSurveyor";
 import SurveyResponse from "../Pages/SurveyResponse/SurveyResponse";
+import UserFeedback from "../Pages/Dashboard/UserFeedback/UserFeedback";
+import AdminFeedback from "../Pages/Dashboard/AdminFeedback/AdminFeedback";
 
 const router = createBrowserRouter([
   {
@@ -104,6 +106,22 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <SurveyResponse />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "user-feedback",
+        element: (
+          <PrivateRoute>
+            <UserFeedback />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "admin-feedback",
+        element: (
+          <PrivateRoute>
+            <AdminFeedback />
           </PrivateRoute>
         ),
       },
