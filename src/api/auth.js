@@ -52,3 +52,13 @@ export const updateRole = async ({ email, role }) => {
 
   return data;
 };
+
+//become surveyor
+export const becomeSurveyor = async (email) => {
+  const currentUser = {
+    email,
+    status: "Requested",
+  };
+  const { data } = await axiosSecure.put(`/users/${email}`, currentUser);
+  return data;
+};

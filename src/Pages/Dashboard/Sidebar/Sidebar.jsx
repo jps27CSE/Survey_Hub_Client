@@ -49,6 +49,16 @@ const Sidebar = () => {
               </Link>
             </li>
           )}
+          {role?.role && role?.role.toLowerCase() === "user" && (
+            <li>
+              <Link
+                to="requet-for-surveyor"
+                className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-700"
+              >
+                Request for Surveyor
+              </Link>
+            </li>
+          )}
           <li>
             <Link
               to="/"

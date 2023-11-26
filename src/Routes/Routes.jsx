@@ -13,6 +13,7 @@ import AdminRoute from "./AdminRoute";
 import SurveyStatus from "../Pages/Dashboard/SurveyStatus/SurveyStatus";
 import AllPayments from "../Pages/Dashboard/AllPayments/AllPayments";
 import CreateSurvey from "../Pages/Dashboard/CreateSurvey/CreateSurvey";
+import RequestSurveyor from "../Pages/RequestForSurveyor/RequestSurveyor";
 
 const router = createBrowserRouter([
   {
@@ -86,6 +87,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <CreateSurvey />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "requet-for-surveyor",
+        element: (
+          <PrivateRoute>
+            <RequestSurveyor />
           </PrivateRoute>
         ),
       },
