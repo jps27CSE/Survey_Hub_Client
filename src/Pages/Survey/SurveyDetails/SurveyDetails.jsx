@@ -6,6 +6,7 @@ import {
   incrementDislike,
   incrementLike,
   incrementVote,
+  postSurveyReport,
   submitVote,
 } from "../../../api/survey";
 import { useParams } from "react-router-dom";
@@ -19,7 +20,8 @@ const SurveyDetails = () => {
   const { user } = useAuth();
   const [selectedOption, setSelectedOption] = useState(null);
   const [commentContent, setCommentContent] = useState("");
-  console.log(selectedOption);
+  const [reportContent, setReportContent] = useState("");
+  const [reportError, setReportError] = useState("");
   const [role] = useRole();
 
   useEffect(() => {
@@ -53,16 +55,13 @@ const SurveyDetails = () => {
           selectedOption: selectedOption,
         };
 
-        // Check if the user has already voted for this survey
         const existingVote = await hasUserVoted(userEmail, survey._id);
 
         if (existingVote) {
           toast.error("You have already voted for this survey");
         } else {
-          // If the user has not voted, submit the vote
           const data = await submitVote(postData);
 
-          // Increment the vote count for the selected option
           await incrementVote(survey._id, selectedOption);
 
           toast.success("Vote submitted successfully");
@@ -84,12 +83,11 @@ const SurveyDetails = () => {
 
       await addComment(survey._id, userEmail, commentContent);
 
-      // Fetch the updated survey data to display the new comments
       const updatedSurvey = await getSurvey(survey._id);
       setSurvey(updatedSurvey);
 
       toast.success("Comment added successfully");
-      setCommentContent(""); // Clear the comment content after submission
+      setCommentContent("");
     } catch (error) {
       console.error("Error adding comment:", error.message);
       toast.error("Failed to add comment");
@@ -127,8 +125,26 @@ const SurveyDetails = () => {
     }
   };
 
-  const handleReport = () => {
-    // Implement the logic to handle user reporting the survey
+  const handleReportSubmit = async () => {
+    try {
+      // Validate report content if needed
+      if (!reportContent.trim()) {
+        setReportError("Report content cannot be empty");
+        return;
+      }
+
+      // Call the API function to submit the report
+      await postSurveyReport(survey._id, user?.email, reportContent);
+
+      // Reset state
+      setReportContent("");
+      setReportError("");
+
+      toast.success("Report submitted successfully");
+    } catch (error) {
+      console.error("Error submitting report:", error.message);
+      setReportError("Failed to submit report");
+    }
   };
 
   return (
@@ -164,10 +180,8 @@ const SurveyDetails = () => {
           </button>
         )}
 
-        {/* Display Results */}
         <div className="mb-4">
           <h3 className="text-lg font-semibold mb-2">Survey Results</h3>
-          {/* Implement the logic to display survey results visually using charts */}
         </div>
 
         {/* Allow Pro-Users to Add Comments */}
@@ -215,16 +229,37 @@ const SurveyDetails = () => {
             Dislike
           </button>
         </div>
-
-        {/* Allow Users to Report the Survey */}
-        <div>
-          <button
-            onClick={handleReport}
-            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-          >
-            Report Survey
-          </button>
-        </div>
+        {/* Allow Users to Report the Survey (show only for logged-in users) */}
+        {user ? (
+          <div>
+            <label
+              htmlFor="reportContent"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Report Survey
+            </label>
+            <textarea
+              id="reportContent"
+              name="reportContent"
+              value={reportContent}
+              onChange={(e) => setReportContent(e.target.value)}
+              rows="4"
+              className="w-full p-2 border border-gray-300 rounded"
+              placeholder="Enter your report content..."
+            ></textarea>
+            {reportError && <p className="text-red-500 mt-2">{reportError}</p>}
+            <button
+              onClick={handleReportSubmit}
+              className="mt-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+            >
+              Submit Report
+            </button>
+          </div>
+        ) : (
+          <p className="text-gray-600 mt-4">
+            Please log in to report this survey.
+          </p>
+        )}
       </div>
     </div>
   );

@@ -122,3 +122,23 @@ export const incrementDislike = async (id) => {
     throw error;
   }
 };
+// Post survey report
+export const postSurveyReport = async (surveyId, userEmail, reportContent) => {
+  try {
+    const postData = {
+      userEmail: userEmail,
+      reportContent: reportContent,
+    };
+
+    const response = await axiosSecure.post(
+      `${import.meta.env.VITE_API_URL}/post-report/${surveyId}`,
+      postData
+    );
+
+    console.log("Report submitted successfully:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error submitting report:", error.message);
+    throw error;
+  }
+};
