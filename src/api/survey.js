@@ -176,3 +176,35 @@ export const getAllSurveyReports = async () => {
     throw error;
   }
 };
+
+// Update publish status true
+export const updatePublishStatusTrue = async (id) => {
+  console.log(id);
+  try {
+    const response = await axiosSecure.put(
+      `${import.meta.env.VITE_API_URL}/update-publish/${id}`
+    );
+
+    console.log("Publish status updated successfully:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating publish status:", error.message);
+    throw error;
+  }
+};
+
+// Update publish status false
+export const updatePublishStatusFalse = async (id) => {
+  console.log(id);
+  try {
+    const response = await axiosSecure.put(
+      `${import.meta.env.VITE_API_URL}/update-publish-false/${id}`
+    );
+
+    console.log("Publish status updated successfully:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating publish status:", error.message);
+    throw error;
+  }
+};

@@ -2,14 +2,18 @@ import { useState } from "react";
 import { createSurvey } from "../../../api/survey";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import useRole from "../../../hooks/useRole";
 
 const CreateSurvey = () => {
+  const [role] = useRole();
+  const userEmail = role?.email;
   let navigate = useNavigate();
   const [surveyData, setSurveyData] = useState({
     title: "",
     description: "",
     options: ["Yes", "No"],
     category: "",
+    userEmail: userEmail,
   });
 
   const handleSubmit = async (e) => {

@@ -16,11 +16,11 @@ const Survey = () => {
     queryFn: async () => await getAllSurveys(),
   });
 
-  console.log(surveys);
+  const publishedSurveys = surveys.filter((survey) => survey.publish);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {surveys?.map((survey) => (
+      {publishedSurveys.map((survey) => (
         <SurveyCard key={survey._id} survey={survey} />
       ))}
     </div>
