@@ -22,3 +22,13 @@ export const savePayment = async (paymentDetails) => {
     throw error;
   }
 };
+
+export const getAllPayments = async () => {
+  try {
+    const { data } = await axiosSecure.get("/all-payments");
+    return data;
+  } catch (error) {
+    console.error("Error fetching payments:", error);
+    throw error;
+  }
+};
