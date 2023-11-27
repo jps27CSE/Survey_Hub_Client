@@ -62,3 +62,16 @@ export const becomeSurveyor = async (email) => {
   const { data } = await axiosSecure.put(`/users/${email}`, currentUser);
   return data;
 };
+
+export const updateProUser = async (email) => {
+  const currentUser = {
+    email,
+    pro_user: "true",
+  };
+  const { data } = await axiosSecure.put(
+    `/update-pro-user/${email}`,
+    currentUser
+  );
+
+  return data;
+};

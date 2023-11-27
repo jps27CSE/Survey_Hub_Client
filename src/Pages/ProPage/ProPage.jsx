@@ -1,3 +1,9 @@
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import CheckoutForm from "../../Components/CheckoutForm";
+
+const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
+
 const ProPage = () => {
   return (
     <div className="pro-page-container p-8 max-w-md mx-auto bg-white shadow-md rounded-md">
@@ -8,7 +14,7 @@ const ProPage = () => {
 
       <div className="subscription-details mb-6">
         <h2 className="text-lg font-semibold mb-2">Subscription Details</h2>
-        <p>Monthly Subscription: $9.99</p>
+        <p>Monthly Subscription: $10.00</p>
         <p>Cancel anytime</p>
       </div>
 
@@ -17,10 +23,9 @@ const ProPage = () => {
         <p className="text-gray-600 mb-4">
           Securely pay with your credit card:
         </p>
-
-        {/* Stripe Checkout Button (Integration needed) */}
-        {/* Replace this with your Stripe integration */}
-        <button className="btn btn-primary">Subscribe with Stripe</button>
+        <Elements stripe={stripePromise}>
+          <CheckoutForm />
+        </Elements>
       </div>
     </div>
   );
