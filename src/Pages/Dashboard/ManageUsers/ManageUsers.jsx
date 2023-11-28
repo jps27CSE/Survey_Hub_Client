@@ -13,7 +13,7 @@ const ManageUsers = () => {
 
   const filteredUsers = users.filter((user) => {
     if (filter === "all") return true;
-    if (filter === "pro") return user?.pro_user === "true";
+    if (filter === "pro") return user?.pro_user === true;
     if (filter === "user") return user?.role === "user";
     if (filter === "surveyor") return user?.role === "surveyor";
     return true;

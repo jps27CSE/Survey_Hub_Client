@@ -28,7 +28,9 @@ const UserDataRow = ({ user, refetch }) => {
         <p className="text-gray-900 whitespace-no-wrap">{user?.role}</p>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">{user?.pro_user}</p>
+        <p className="text-gray-900 whitespace-no-wrap">
+          {user?.pro_user === "false" ? "false" : "true"}
+        </p>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         {user?.status ? (
