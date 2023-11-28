@@ -1,8 +1,15 @@
-# React + Vite
+# SurveyHub 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Live Link : https://surveyhub-f382a.web.app/
 
-Currently, two official plugins are available:
+# Features:
+- Login/Register
+- Login with Google
+- Create Surveys
+- Become Pro User
+- Like, Dislike, Comment
+- See Payments
+- Give Feedbacks
+- See Voting Charts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Challenges : I have faced lots of errors while building this project. I need to study more about Stripe payment implementation.
