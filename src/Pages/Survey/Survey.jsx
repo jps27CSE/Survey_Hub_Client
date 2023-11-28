@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllSurveys } from "../../api/survey.js";
 import useAuth from "../../hooks/useAuth.jsx";
 import SurveyCard from "./SurveyCard/SurveyCard.jsx";
+import Footer from "../Footer/Footer.jsx";
 
 const Survey = () => {
   const { user, loading } = useAuth();
@@ -19,10 +20,13 @@ const Survey = () => {
   const publishedSurveys = surveys.filter((survey) => survey.publish);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {publishedSurveys.map((survey) => (
-        <SurveyCard key={survey._id} survey={survey} />
-      ))}
+    <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-20">
+        {publishedSurveys.map((survey) => (
+          <SurveyCard key={survey._id} survey={survey} />
+        ))}
+      </div>
+      <Footer />
     </div>
   );
 };

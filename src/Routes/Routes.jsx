@@ -17,11 +17,13 @@ import RequestSurveyor from "../Pages/RequestForSurveyor/RequestSurveyor";
 import SurveyResponse from "../Pages/SurveyResponse/SurveyResponse";
 import UserFeedback from "../Pages/Dashboard/UserFeedback/UserFeedback";
 import AdminFeedback from "../Pages/Dashboard/AdminFeedback/AdminFeedback";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",

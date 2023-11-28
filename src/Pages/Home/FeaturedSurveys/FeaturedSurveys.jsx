@@ -15,13 +15,14 @@ const FeaturedSurveys = () => {
     queryFn: async () => await getAllSurveys(),
   });
 
-  // Sort surveys based on votes in descending order
   const sortedSurveys = [...surveys].sort((a, b) => b.votes - a.votes);
 
   console.log(surveys);
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-4 mt-2 mx-auto">Featured Surveys</h1>
+      <h1 className="text-5xl font-bold text-center mt-10 mb-5">
+        Featured Surveys
+      </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
         {sortedSurveys.map((survey) => (
           <div

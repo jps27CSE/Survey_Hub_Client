@@ -13,6 +13,8 @@ import { useParams } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useRole from "../../../hooks/useRole";
 import { toast } from "react-toastify";
+import Lottie from "lottie-react";
+import Loading from "../../../assets/lotties/Loading.json";
 import {
   BarChart,
   Bar,
@@ -48,7 +50,9 @@ const SurveyDetails = () => {
   }, [params.id]);
 
   if (!survey) {
-    return <div>Loading...</div>;
+    return (
+      <Lottie className="mx-auto w-80" animationData={Loading} loop={true} />
+    );
   }
 
   const handleVote = (option) => {

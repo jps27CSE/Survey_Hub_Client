@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import BannerPic from "../../../assets/images/banner.jpg";
 import BannerAnimation from "../../../assets/lotties/Banner.json";
 import Lottie from "lottie-react";
@@ -20,9 +21,11 @@ const Banner = () => {
                 Welcome to <span className="text-blue-400">SurveyHub</span> Your
                 Your Ultimate Survey Experience!
               </h1>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Explore
-              </button>
+              <Link to="/survey">
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  Explore
+                </button>
+              </Link>
             </div>
             <div>
               <Lottie

@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useRole from "../../hooks/useRole";
+import Brandlogo from "../../../public/brandlogo.png";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -56,7 +57,7 @@ const Navbar = () => {
               {navLinks}
             </ul>
           </div>
-          <img className="w-[40px]" src="" alt="" />
+          <img className="w-[40px]" src={Brandlogo} alt="" />
           <a className="btn btn-ghost normal-case text-xl">SurveyHub</a>
         </div>
         <div className="navbar-center hidden lg:flex">
