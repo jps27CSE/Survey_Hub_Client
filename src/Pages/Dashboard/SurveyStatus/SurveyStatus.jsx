@@ -7,6 +7,7 @@ import {
 
 import { useQuery } from "@tanstack/react-query";
 import useRole from "../../../hooks/useRole";
+import { toast } from "react-toastify";
 
 const SurveyStatus = () => {
   const [role] = useRole();
@@ -86,21 +87,27 @@ const SurveyStatus = () => {
                     <span className="text-red-500">Unpublished</span>
                   )}
                 </td>
-                <td className="py-2 px-4 border-b">
-                  <button
-                    onClick={() => handlePublishStatusUpdate(survey?._id, true)}
-                    className="btn"
-                  >
-                    Publish
-                  </button>
-                  <button
-                    onClick={() =>
-                      handlePublishStatusUpdateFalse(survey?._id, false)
-                    }
-                    className="btn ml-2"
-                  >
-                    Unpublish
-                  </button>
+                <td className="py-2 px-4 border-b flex">
+                  <div>
+                    <button
+                      onClick={() =>
+                        handlePublishStatusUpdate(survey?._id, true)
+                      }
+                      className="btn mb-2"
+                    >
+                      Publish
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() =>
+                        handlePublishStatusUpdateFalse(survey?._id, false)
+                      }
+                      className="btn ml-2"
+                    >
+                      Unpublish
+                    </button>
+                  </div>
                 </td>
                 <td className="py-2 px-4 border-b">
                   <button
