@@ -1,9 +1,19 @@
 import { useEffect, useState } from "react";
 import { getSurveyVotes } from "../../api/survey";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 const SurveyResponse = () => {
   const [surveyResponses, setSurveyResponses] = useState([]);
-  console.log(surveyResponses);
+
   useEffect(() => {
     const fetchSurveyVotes = async () => {
       try {
@@ -16,6 +26,12 @@ const SurveyResponse = () => {
 
     fetchSurveyVotes();
   }, []);
+
+  const dataForChart = surveyResponses.map((response, index) => ({
+    name: response.userName,
+    votedYes: response.selectedOption === "Yes" ? 1 : 0,
+    votedNo: response.selectedOption === "No" ? 1 : 0,
+  }));
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -46,7 +62,22 @@ const SurveyResponse = () => {
         </table>
       </div>
 
-      {/* Add chart component here */}
+      <div className="mt-8">
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart
+            data={dataForChart}
+            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="votedYes" fill="#82ca9d" />
+            <Bar dataKey="votedNo" fill="#8884d8" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };

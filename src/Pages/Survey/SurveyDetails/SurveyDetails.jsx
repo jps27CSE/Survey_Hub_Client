@@ -13,6 +13,16 @@ import { useParams } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import useRole from "../../../hooks/useRole";
 import { toast } from "react-toastify";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 const SurveyDetails = () => {
   const params = useParams();
@@ -74,6 +84,7 @@ const SurveyDetails = () => {
       }
     }
   };
+
   const handleCommentChange = (event) => {
     setCommentContent(event.target.value);
   };
@@ -151,6 +162,12 @@ const SurveyDetails = () => {
     }
   };
 
+  // Data for Recharts Bar Chart
+  const dataForChart = [
+    { option: "Yes", votes: survey.YesVotes || 0 },
+    { option: "No", votes: survey.NoVotes || 0 },
+  ];
+
   return (
     <div>
       <div className="card shadow-md p-6 m-4 bg-white rounded-md">
@@ -184,8 +201,21 @@ const SurveyDetails = () => {
           </button>
         )}
 
-        <div className="mb-4">
-          <h3 className="text-lg font-semibold mb-2">Survey Results</h3>
+        {/* Recharts Bar Chart */}
+        <div className="mt-8">
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart
+              data={dataForChart}
+              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="option" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="votes" fill="#8884d8" />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
 
         {/* Allow Pro-Users to Add Comments */}
