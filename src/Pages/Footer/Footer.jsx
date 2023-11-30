@@ -3,7 +3,7 @@ import brandLogo from "../../../public/brandlogo.png";
 const Footer = () => {
   return (
     <div>
-      <footer className="footer p-10 bg-base-200 text-base-content ">
+      <footer className="footer p-10 bg-base-200 text-base-content mt-2">
         <aside>
           <img src={brandLogo} className="w-20" alt="" />
           <p className="font-bold">
